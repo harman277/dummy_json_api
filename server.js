@@ -2,7 +2,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
-const dummyRoutes = require("./routes/dummyRoutes");
 
 dotenv.config();
 const app = express();
@@ -19,13 +18,14 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log("✅ MongoDB Connected"))
 .catch((err) => console.log("❌ MongoDB Connection Error:", err));
 
+// Routes
+const dummyRoutes = require("./routes/dummyRoutes");
 app.use("/api/dummy", dummyRoutes);
 
-app.get('/', async (_, res) => {
-    res.send('<h1>Working fine</h1>');
+// Base Route
+app.get("/", (req, res) => {
+    res.json({ message: "🚀 API is working on Vercel!" });
 });
 
-
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+// Export for Vercel
+module.exports = app;
