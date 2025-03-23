@@ -16,9 +16,12 @@ router.get("/:id", async (req, res) => {
 
 // Add New Data
 router.post("/", async (req, res) => {
-    const newData = new Dummy(req.body);
-    await newData.save();
-    res.status(201).json(newData);
+    try {
+        const data = await Dummy.insertMany(req.body); 
+        res.status(201).json({ message: "Users added successfully", data });
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
 });
 
 // Update Data
