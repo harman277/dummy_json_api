@@ -31,9 +31,14 @@ router.put("/:id", async (req, res) => {
 });
 
 // Delete Data
-router.delete("/:id", async (req, res) => {
-    await Dummy.findByIdAndDelete(req.params.id);
-    res.json({ message: "Deleted Successfully" });
+router.delete("/", async (req, res) => {
+    try {
+        const result = await Dummy.deleteMany({});
+        res.json({ message: `Deleted ${result.deletedCount} records successfully` });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to delete records" });
+    }
 });
+
 
 module.exports = router;
