@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const DummySchema = new mongoose.Schema({
-  name: { type: String, required: true, unique: true },
+  name: { type: String, required: true },
     species: { type: String, required: true }, 
     age: { type: Number, required: true }, 
     habitat: { type: String, required: true },
